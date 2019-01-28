@@ -15,7 +15,7 @@ export class SplashPage implements OnInit {
 
 		setTimeout(() => {
 			console.log('SplashPage::ngOnInit | navigate to game page');
-			// this.router.navigateByUrl('/home');
+			this.router.navigateByUrl('/game');
 		}, 2500);
 	}
 
