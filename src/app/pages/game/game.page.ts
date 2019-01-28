@@ -8,8 +8,13 @@ import { Router } from '@angular/router';
 })
 export class GamePage {
 
-	squares = Array(9).fill(null);
-	player = 'X';
+	cell_player = 'x';
+	cell_oponent = 'o';
+	cell_empty = '-';
+
+	squares = Array(9).fill(this.cell_empty);
+	player = 'x';
+
 	winner = null;
 
 	constructor(public router: Router) {
@@ -17,28 +22,45 @@ export class GamePage {
 	}
 
 	get gameStatusMessage() {
-		return this.winner ? `${this.winner} has won!` :
-			`${this.player}'s turn`;
+		return this.winner ? `${this.winner} has won!` : `${this.player}'s turn`;
 	}
 
 	handleMove(position) {
-		if (!this.winner && !this.squares[position]) {
-			this.squares[position] = this.player;
-			if (this.winnigMove()) {
-				this.winner = this.player;
-			}
-			this.player = this.player === 'X' ? 'O' : 'X';
+		console.log('GamePage::handleMove | position=', position);
+
+		console.log('GamePage::handleMove | winner=', this.winner);
+		console.log('GamePage::handleMove | square=', this.squares[position]);
+
+		if (this.winner) {
+			console.log('GamePage::handleMove | has winner', this.winner);
+			return;
 		}
+
+		if (this.squares[position] != this.cell_empty) {
+			console.log('GamePage::handleMove | cell not empty', this.squares[position]);
+			return;
+		}
+
+		console.log('GamePage::handleMove | move=', this.player);
+
+		this.squares[position] = this.player;
+		if (this.winnigMove()) {
+			this.winner = this.player;
+		}
+		this.player = this.player === this.cell_player ? this.cell_oponent : this.cell_player;
+
 	}
 
 	winnigMove() {
+		console.log('GamePage::winnigMove | ');
+
 		const conditions = [
 			[0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
 			[0, 3, 6], [1, 4, 7], [2, 5, 8], // colums
 			[0, 4, 8], [2, 4, 6]             // diagonal
 		];
 		for (let condition of conditions) {
-			if (this.squares[condition[0]]
+			if (this.squares[condition[0]] != this.cell_empty
 				&& this.squares[condition[0]] === this.squares[condition[1]]
 				&& this.squares[condition[1]] === this.squares[condition[2]]) {
 				return true;
@@ -48,8 +70,8 @@ export class GamePage {
 	}
 
 	restartGame() {
-		this.squares = Array(9).fill(null);
-		this.player = 'X';
+		this.squares = Array(9).fill(this.cell_empty);
+		this.player = this.cell_player;
 		this.winner = null;
 	}
 

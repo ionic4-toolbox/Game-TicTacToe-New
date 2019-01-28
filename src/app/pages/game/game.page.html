@@ -16,7 +16,10 @@
 		<ion-grid class="board">
 			<ion-row *ngFor="let row of [0,1,2]">
 				<ion-col col-4 class="cell" *ngFor="let col of [0,1,2]" (click)="handleMove(col+row*3)">
-					{{squares[col+row*3]}}
+					<!--
+						{{ squares[col+row*3 ]}}
+					-->
+					<img src="assets/img/1_{{ squares[col+row*3 ]}}.png"/>
 				</ion-col>
 			</ion-row>
 		</ion-grid>
