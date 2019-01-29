@@ -10,7 +10,7 @@ export class GamePage {
 
 	cell_player = 'x';
 	cell_oponent = 'o';
-	cell_empty = '-';
+	cell_empty = 'empty';
 
 	squares = Array(9).fill(this.cell_empty);
 	player = 'x';
@@ -27,9 +27,6 @@ export class GamePage {
 
 	handleMove(position) {
 		console.log('GamePage::handleMove | position=', position);
-
-		console.log('GamePage::handleMove | winner=', this.winner);
-		console.log('GamePage::handleMove | square=', this.squares[position]);
 
 		if (this.winner) {
 			console.log('GamePage::handleMove | has winner', this.winner);
@@ -74,5 +71,4 @@ export class GamePage {
 		this.player = this.cell_player;
 		this.winner = null;
 	}
-
 }
